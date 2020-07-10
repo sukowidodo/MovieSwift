@@ -9,13 +9,25 @@
 import SwiftUI
 
 struct Detail: View {
+    var id : String
+    @ObservedObject var homeVM : HomeViewModel
+    
+    init(_ id:String) {
+        self.id = id
+        self.homeVM = HomeViewModel()
+    }
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("")
+        }.onAppear {
+            self.homeVM.getDetail(self.id)
+        }
     }
 }
 
 struct Detail_Previews: PreviewProvider {
     static var previews: some View {
-        Detail()
+        Detail("1")
     }
 }

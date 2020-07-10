@@ -19,23 +19,31 @@ struct Home: View {
         VStack{
             Text("Top Rated")
             ScrollView(.horizontal) {
-                HStack(spacing: 20) {
-                    ForEach(self.homeVM.movie){ items in
-                        WebImage(imageURL: URL(string: "https://via.placeholder.com/300"))
+                NavigationView {
+                    HStack(spacing: 20) {
+                        ForEach(self.homeVM.movie){ items in
+                            NavigationLink(destination: Detail("\(items.id)")) {
+                                WebImage(imageURL: URL(string: "\(Constants.BASE_IMAGE_PATH) \(items.posterPath)"))
+                            }
+                        }
+                    }.onAppear {
+                        self.homeVM.getTop()
                     }
-                }.onAppear {
-                    self.homeVM.getPopular()
                 }
             }
             
             Text("Popular")
             ScrollView(.vertical) {
-                VStack(spacing: 20) {
-                    ForEach(self.homeVM.movie){ items in
-                        WebImage(imageURL: URL(string: "https://via.placeholder.com/300"))
+                NavigationView {
+                    VStack(spacing: 20) {
+                        ForEach(self.homeVM.movie){ items in
+                            NavigationLink(destination: Detail("\(items.id)")) {
+                                WebImage(imageURL: URL(string: "\(Constants.BASE_IMAGE_PATH) \(items.posterPath)"))
+                            }
+                        }
+                    }.onAppear {
+                        self.homeVM.getPopular()
                     }
-                }.onAppear {
-                    self.homeVM.getPopular()
                 }
             }
         }

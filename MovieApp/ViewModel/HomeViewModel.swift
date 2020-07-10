@@ -23,7 +23,17 @@ class HomeViewModel : ObservableObject {
     
     func getTop(){
         api.getTopRated { (data, err) in
-            
+            DispatchQueue.main.async {
+                self.movie = data?.results as! [Result]
+            }
+        }
+    }
+    
+    func getDetail(_ id:String){
+        api.getDetail(id) { (data, err) in
+            DispatchQueue.main.async {
+                
+            }
         }
     }
 }

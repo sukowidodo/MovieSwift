@@ -20,6 +20,7 @@ import Foundation
 struct Constants {
     static let BASEURL : String = "https://api.themoviedb.org/3"
     static let API_KEY = "15e99ded3a1a087468a9596f5b58db5c"
+    static let BASE_IMAGE_PATH = "https://image.tmdb.org/t/p/w500"
 }
 
 class RequestService {
@@ -31,7 +32,7 @@ class RequestService {
             completion: @escaping(T?, Error?) -> Void
         ) {
         
-        guard let url = URL(string : Constants.BASEURL + endpoint+"?api_key="+Constants.API_KEY) else {
+        guard let url = URL(string : Constants.BASEURL + endpoint+"?api_key=" + Constants.API_KEY) else {
             return
         }
         
@@ -78,14 +79,17 @@ class RequestService {
         return encoder
     }
     
-   func getPopular(completion: @escaping (ResponsePopular?, Error?) -> Void) -> Void {
+    //get popular
+    func getPopular(completion: @escaping (ResponsePopular?, Error?) -> Void) -> Void {
         httpRequest(endpoint: "/movie/popular", method: "GET", completion: completion)
     }
     
+    //get top rated
     func getTopRated( completion: @escaping (ResponseTopRated?, Error?) -> Void) -> Void {
         httpRequest(endpoint: "/movie/top_rated", method: "GET", completion: completion)
     }
     
+    //get detail
     func getDetail(_ id:String, completion: @escaping (ResponseDetail?, Error?) -> Void) -> Void {
         httpRequest(endpoint: "/movie/"+id, method: "GET", completion: completion)
     }
