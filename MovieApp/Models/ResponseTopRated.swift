@@ -15,7 +15,7 @@ import Foundation
 // MARK: - ResponseTopRated
 struct ResponseTopRated: Codable {
     let page, totalResults, totalPages: Int
-    let results: [Result1]
+    let results: [Result]
 
     enum CodingKeys: String, CodingKey {
         case page
@@ -26,7 +26,7 @@ struct ResponseTopRated: Codable {
 }
 
 // MARK: - Result
-struct Result1: Codable {
+struct Result1: Hashable, Codable, Identifiable {
     let popularity: Double
     let voteCount: Int
     let video: Bool

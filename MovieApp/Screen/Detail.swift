@@ -18,10 +18,17 @@ struct Detail: View {
     }
     
     var body: some View {
-        VStack {
-            Text("")
-        }.onAppear {
-            self.homeVM.getDetail(self.id)
+        VStack(){
+            HStack {
+                Image("img")
+                VStack{
+                    Text("Spiderman far from away").font(.title)
+                    Text("07 Januari 2019")
+                }
+                
+            }.onAppear {
+                self.homeVM.getDetail(self.id)
+            }
         }
     }
 }

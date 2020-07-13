@@ -7,45 +7,52 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct Home: View {
-    @ObservedObject var homeVM : HomeViewModel
-    
-    init(){
-        self.homeVM = HomeViewModel()
-    }
+    @EnvironmentObject var homeVM : HomeViewModel
     
     var body: some View {
-        VStack{
-            Text("Top Rated")
-            ScrollView(.horizontal) {
-                NavigationView {
-                    HStack(spacing: 20) {
-                        ForEach(self.homeVM.movie){ items in
-                            NavigationLink(destination: Detail("\(items.id)")) {
-                                WebImage(imageURL: URL(string: "\(Constants.BASE_IMAGE_PATH) \(items.posterPath)"))
+        ZStack {
+        List {
+            //first row
+            VStack(alignment: .leading, spacing: 10){
+                Text("Top Rated").font(.title).padding(.leading)
+                GeometryReader { geometry in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(alignment: .top, spacing: 10) {
+                            ForEach(self.homeVM.movie2){ items in
+                                URLImage(URL(string: "\(Constants.BASE_IMAGE_PATH)\(items.posterPath)")!){ proxy in
+                                        proxy.image
+                                    }.frame(width: geometry.size.width / 2, height: 230).padding().cornerRadius(30).overlay(RoundedRectangle(cornerRadius: 30)
+                                        .stroke(Color.orange, lineWidth: 4))
+                                    .shadow(radius: 30)
                             }
                         }
-                    }.onAppear {
-                        self.homeVM.getTop()
                     }
                 }
-            }
+            }.frame(height: 320)
+            .listRowInsets(EdgeInsets())
             
-            Text("Popular")
-            ScrollView(.vertical) {
-                NavigationView {
-                    VStack(spacing: 20) {
-                        ForEach(self.homeVM.movie){ items in
-                            NavigationLink(destination: Detail("\(items.id)")) {
-                                WebImage(imageURL: URL(string: "\(Constants.BASE_IMAGE_PATH) \(items.posterPath)"))
+            //second row
+            VStack(alignment: .leading, spacing: 10){
+                Text("POPULAR").font(.title).padding(.leading)
+                GeometryReader { geometry in
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(alignment: .top, spacing: 10) {
+                            ForEach(self.homeVM.movie){ items in
+                                URLImage(URL(string: "\(Constants.BASE_IMAGE_PATH)\(items.posterPath)")!){ proxy in
+                                        proxy.image
+                                }.frame(width: geometry.size.width / 2, height: 230).padding().cornerRadius(30).overlay(RoundedRectangle(cornerRadius: 30)
+                                    .stroke(Color.orange, lineWidth: 4))
+                                .shadow(radius: 30)
                             }
                         }
-                    }.onAppear {
-                        self.homeVM.getPopular()
                     }
                 }
-            }
+            }.frame(height: 320)
+            .listRowInsets(EdgeInsets())
+        }
         }
     }
 }

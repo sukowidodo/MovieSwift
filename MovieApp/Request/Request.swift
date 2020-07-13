@@ -20,7 +20,7 @@ import Foundation
 struct Constants {
     static let BASEURL : String = "https://api.themoviedb.org/3"
     static let API_KEY = "15e99ded3a1a087468a9596f5b58db5c"
-    static let BASE_IMAGE_PATH = "https://image.tmdb.org/t/p/w500"
+    static let BASE_IMAGE_PATH = "https://image.tmdb.org/t/p/w200"
 }
 
 class RequestService {
